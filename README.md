@@ -1,2 +1,2 @@
 # Algorithms_CS211
-CS211 - NUIM (2018)
+CS211 - (2018)
