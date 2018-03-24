@@ -1,0 +1,73 @@
+import java.util.Scanner;
+public class Lab1 {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		//Creates String(input) from user
+		System.out.println("Enter String");
+		String input = scan.nextLine();
+		
+		int len = input.length(); //length of input
+		String result = ""; // creates a String(result)
+		
+		//Converts characters from input to ASCII values
+		//Then puts these values into a String(binary)
+		for(int i =0; i <len;i++)
+		{
+			int asciiValue = (int)input.charAt(i);
+			String binary = Integer.toBinaryString(asciiValue);
+			//System.out.println(binary);
+			
+			//if the length of the String(binary) is less then 7 add zero because it is for spaces
+			if(binary.length() < 7)
+			{
+				binary = "0" + binary;
+			}
+			
+			//Add ASCII values to String(result)
+			result += binary + " ";
+		}
+		
+		System.out.println("Result: \n" + result);
+	
+		
+		//Create array(letters)
+		int letters [] = new int [256];
+		
+		//Stores letter count
+		for(int i =0; i<len;i++)
+		{
+			letters[(int)input.charAt(i)]++;
+			//System.out.println(letters[i]);
+		}
+		
+		
+		System.out.println("\nLetter Counter: ");
+		
+		//Go thought array(letters)
+		for(int x =0; x < letters.length;x++)
+		{
+			//String counter = "";
+			
+			//if there is a letter stored here print
+			if(letters [x] > 0)
+			{
+			String counter = " ";
+			
+			String character = (char)x + "";
+			
+			if(character == " ")
+			{
+				character = "space";
+			}
+			counter += character + " appeared " + letters[x] + " Times";
+			//System.out.println((char)x + " appeared " + letters[x] + " Times");
+			System.out.println(counter);
+			}
+			
+		}
+
+	}
+
+}
