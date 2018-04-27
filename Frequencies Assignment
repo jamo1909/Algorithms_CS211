@@ -1,41 +1,40 @@
 import java.util.Scanner;
-public class Lab1 {
+public class Lab2 {
 
 	public static void main(String[] args) {
+		//Takes String from user
 		Scanner scan = new Scanner(System.in);
-		
-		//Creates String(input) from user
 		System.out.println("Enter String");
 		String input = scan.nextLine();
 		
-		int len = input.length(); //length of input
-		String result = ""; // creates a String(result)
+		int len = input.length();
+		String result = "";
 		
-		//Converts characters from input to ASCII values
-		//Then puts these values into a String(binary)
+		
 		for(int i =0; i <len;i++)
 		{
+			//Converts string characters to ASCII values
 			int asciiValue = (int)input.charAt(i);
+			//Converts ASCII values to binary and saves them to a String 
 			String binary = Integer.toBinaryString(asciiValue);
 			//System.out.println(binary);
 			
-			//if the length of the String(binary) is less then 7 add zero because it is for spaces
+			//if the length of the Binary String is less than 7 add 0, for spaces
 			if(binary.length() < 7)
 			{
 				binary = "0" + binary;
 			}
 			
-			//Add ASCII values to String(result)
+			//saves binary string to result and puts a space between each binary value
 			result += binary + " ";
 		}
-		
 		System.out.println("Result: \n" + result);
-	
+	//System.out.println("Result: \n" + binary);
 		
-		//Create array(letters)
+		//create a array of all characters
 		int letters [] = new int [256];
 		
-		//Stores letter count
+		//this for loop counts the frequency of 
 		for(int i =0; i<len;i++)
 		{
 			letters[(int)input.charAt(i)]++;
@@ -44,25 +43,15 @@ public class Lab1 {
 		
 		
 		System.out.println("\nLetter Counter: ");
-		
-		//Go thought array(letters)
 		for(int x =0; x < letters.length;x++)
 		{
-			//String counter = "";
-			
-			//if there is a letter stored here print
+			//if the character frequency is greater than zero
 			if(letters [x] > 0)
 			{
+			//create String called counter and set it to an empty String 	
 			String counter = " ";
-			
-			String character = (char)x + "";
-			
-			if(character == " ")
-			{
-				character = "space";
-			}
-			counter += character + " appeared " + letters[x] + " Times";
-			//System.out.println((char)x + " appeared " + letters[x] + " Times");
+			//Converts x to a character and letter[x] is the frequency of the character
+			counter += (char)x + " appeared " + letters[x] + " Times";
 			System.out.println(counter);
 			}
 			
