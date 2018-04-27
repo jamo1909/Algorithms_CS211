@@ -1,0 +1,86 @@
+import javax.sound.sampled.*;
+import java.util.*;
+public class MorseCode {
+	public static void main(String[] args) throws LineUnavailableException{
+         //array for alphabet
+	    char[] english = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+	                  'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
+	                  'y', 'z' };
+         //array for morse code symbols in correspondence to array to alphabet array
+	    String[] morse = { ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", 
+	                ".---", "-.-", ".-..", "--", "-.", "---", ".---.", "--.-", ".-.",
+	                "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.." };
+
+//Enter String from user
+	   Scanner scan = new Scanner(System.in);
+	   System.out.println("Enter Your String");
+	   String code = scan.nextLine().toLowerCase();
+
+//converts string characters to char array
+	    char[] chars = code.toCharArray();
+
+
+	    String str = "";
+	    for (int i = 0; i < chars.length; i++){
+	        for (int j = 0; j < english.length; j++){
+          //if string chars equals alphabet array
+	            if (english[j] == chars[i]){
+              convert to morse code symbols
+	                str = str + morse[j] + " ";  
+	            }
+	        }
+	    }
+	    
+	    
+	    char characters []= str.toCharArray();
+	    
+	    for(int x=0;x<str.length();x++)
+	    {
+	    	if(characters[x] == '.')
+	    	{
+	    		tone(2000, 92, 800.0);
+	    		if(characters[x+1] == ' '){
+	    			tone(2000,3,0);
+	    		}else{
+	    			tone(2000,1,0);
+	    		}
+	    	}
+	    	else if(characters[x] == '-')
+	    	{
+	    		tone(2000, 276, 800.0);
+	    		if(characters[x+1] == ' '){
+	    			tone(2000,3,0);
+	    		}else{
+	    			tone(2000,1,0);
+	    		}
+	    	}else{
+	    		tone(2000, 70, 800.0);
+	    	}
+	    	
+	    }
+	    
+	    System.out.println("Your Morse Code");
+	    System.out.println(str);
+	    scan.close();
+	} 
+	
+  
+  //--------------------------------------------------------------------------------------------------------------------
+  //this code was provided by lecturer. This method gives the sound
+	 public static void tone(int hz, int msecs, double vol) throws LineUnavailableException{       
+		 float SAMPLE_RATE = 8000f;       
+		 byte[] buf = new byte[1];      
+		 AudioFormat af = new AudioFormat(SAMPLE_RATE,8,1,true,false);       
+		 SourceDataLine sdl = AudioSystem.getSourceDataLine(af);      
+		 sdl.open(af);       
+		 sdl.start();      
+		 for (int i=0; i < msecs*8; i++) {         
+			 double angle = i / (SAMPLE_RATE / hz) * 2.0 * Math.PI;        
+			 buf[0] = (byte)(Math.sin(angle) * 127.0 * vol);       
+			 sdl.write(buf,0,1);    
+			 }      
+		 sdl.drain();       
+		 sdl.stop();       
+		 sdl.close();  
+		 } 
+}
