@@ -1,0 +1,117 @@
+//Majority of this code was given in the lab by Lecturer. 
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class Huffman{
+
+    public static void main(String[] args){
+       Scanner in = new Scanner(System.in);
+ //----------------------------------------------------------------------------------------------
+       //From Lab 2
+       System.out.println("Enter sentence: ");
+       String sentence = in.nextLine();
+       String binaryString="";      //this stores the string of binary code
+       
+       
+       for(int i=0; i < sentence.length(); i++){        //go through the sentence
+           int decimalValue = (int)sentence.charAt(i);      //convert to decimal
+           String binaryValue = Integer.toBinaryString(decimalValue);      //convert to binary
+           for(int j=7;j>binaryValue.length();j--){
+               binaryString+="0";           //this loop adds in those pesky leading zeroes
+            }
+           binaryString += binaryValue+" "; //add to the string of binary
+       }
+       System.out.println(binaryString);    //print out the binary
+       
+              
+       int[] array = new int[256];      //an array to store all the frequencies
+       
+       for(int i=0; i < sentence.length(); i++){    //go through the sentence
+           array[(int)sentence.charAt(i)]++;    //increment the appropriate frequencies
+           
+       }
+       
+//-----------------------------------------------------------------------------------------------------
+       
+       PriorityQueue < Tree >  PQ = new PriorityQueue < Tree >() ;  //make a priority queue to hold the forest of trees    
+        
+       
+       for(int i=0; i<array.length; i++){ //go through frequency array
+           if(array[i]>0){ //print out non-zero frequencies - cast to a char
+                System.out.println("'"+(char)i+"' appeared "+array[i]+((array[i] == 1) ? " time" : " times"));
+     
+               //Code Added:
+     
+               //MAKE THE FOREST OF TREES AND ADD THEM TO THE PQ          
+               //create a new Tree 
+               //set the cumulative frequency of that Tree
+               //insert the letter as the root node 
+               //add the Tree into the PQ
+                
+                Tree mytree = new Tree();
+                mytree.frequency= array[i]; 
+                Node myNode = new Node();
+                myNode.letter = (char)i;
+                mytree.root = myNode;
+                PQ.add(mytree);
+                      
+            }
+        }
+        
+        
+        while(PQ.size()>1){             //while there are two or more Trees left in the forest
+            
+            //Code Add:
+            
+            //IMPLEMENT THE HUFFMAN ALGORITHM
+            //when you're making the new combined tree, don't forget to assign a default root node (or else you'll get a null pointer exception)
+            //if you like, to check if everything is working so far, try printing out the letter of the roots of the two trees you're combining
+        	
+        	Tree mytree = new Tree();
+        	Node myRoot = new Node();
+        	Tree firstTree = PQ.poll();
+        	Tree secondTree = PQ.poll();
+        	
+        	mytree.root = myRoot;
+        	mytree.root.leftChild = firstTree.root;
+        	mytree.root.rightChild = secondTree.root;
+        	
+        	mytree.frequency = firstTree.frequency + secondTree.frequency;
+        	
+        	PQ.add(mytree);
+        
+        	
+        }
+        
+        Tree HuffmanTree = PQ.poll();   //now there's only one tree left - get its codes
+        
+        
+        //Code Added:
+        //get all the codes for the letters and print them out
+        //call the getCode() method on the HuffmanTree Tree object for each letter in the sentence
+        //print out all the info
+        
+        String huff="";
+ 	   for(int i=0;i< sentence.length();i++){
+ 		   huff += HuffmanTree.getCode(sentence.charAt(i));
+ 	   }
+ 	   System.out.println(huff);
+        
+in.close();
+    }      
+}
+
+//---------------------------------------------------------------------------
+class Node
+{
+
+public char letter='@';            //stores letter
+
+public Node leftChild;         // this node's left child
+public Node rightChild;        // this node's right child
+
+}  
+// end class Node
+
+//--------------------------------------------------------------------------
+
