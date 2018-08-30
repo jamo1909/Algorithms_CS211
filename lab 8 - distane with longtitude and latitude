@@ -1,0 +1,24 @@
+
+import java.util.Scanner;
+public class distance
+{
+	public static void main (String[] args)
+	{
+		Scanner myScanner = new Scanner(System.in);
+		System.out.println("Input latitude and longtitude");
+		double lat1 = myScanner.nextDouble();
+		double lon1 = myScanner.nextDouble();
+		System.out.println("Input latitude and longtitude");
+		double lat2 = myScanner.nextDouble();
+		double lon2 = myScanner.nextDouble();
+
+		double R = 6371;
+		double d1 = Math.toRadians((lat2-lat1));
+		double d2 = Math.toRadians((lon2-lon1));
+		double a = Math.sin(d1/2) * Math.sin(d1/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(d2/2) * Math.sin(d2/2);
+		double answer = 2 *R* Math.asin(Math.sqrt(a));	
+		System.out.println("The distance is "+answer+ " kilometres");
+	}
+
+	
+}
